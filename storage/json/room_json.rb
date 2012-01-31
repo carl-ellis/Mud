@@ -4,7 +4,6 @@
 class Room
 
 	# Create the constructor JSON can work with
-	attr_serialise :id, :name, :desc, :flags, :items, :mobs, :players
 	# Can't use the automatic ones here due for flexibility needed
 	def to_json(*a)
 		{
