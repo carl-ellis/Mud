@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require './template.rb'
 
 # A template for an item in the game
 class ItemTemplate < Template

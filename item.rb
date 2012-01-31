@@ -1,17 +1,18 @@
 #!/usr/bin/env ruby
+require './item_template.rb'
 
 # An instance of  an item in the game
 class Item
 
 	# id				-> 	item instance id
-	# hp				->  item health
+	# wear			->  item wear
 	#	template  ->	item template
 	attr_accessor :id, :hp
 
 	# Default constructor
-	def initialize(id, hp, template)
+	def initialize(id, wear, template)
 		@id = id
-		@hp = hp
+		@wear = wear
 		@template	= template
 	end
 end

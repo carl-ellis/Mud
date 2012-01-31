@@ -10,9 +10,14 @@ class Template
 
 	# default constructor
 	def initialize(id, name, desc)
-		@id = d
+		@id = id
 		@name = name
 		@desc = desc
+	end
+
+	# String output
+	def to_s
+		return "#{@id}"
 	end
 
 end
