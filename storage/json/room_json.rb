@@ -17,10 +17,12 @@ class Room
 			'items'					=>	@items.collect { |i| i.id },
 			'mobs'					=>	@mobs.collect { |m| m.id },
 			'players'				=>	@players.collect { |p| p.id },
+			'exits' 				=>	Hash[@exits.collect { |k,v| [k, v.id]}],
+			'doors' 				=>	Hash[@doors.collect { |k,v| [k, v.state]}]
 		}.to_json(*a)
 	end
 
 	def self.json_create(o)
-		new(*o['id'], *o['name'], *o['desc'], *o['flags'], *o['items'], *o['mobs'], *o['players'])
+		new(*o['id'], *o['name'], *o['desc'], *o['flags'], *o['items'], *o['mobs'], *o['players'], *o['exits'], *o['doors'])
 	end
 end

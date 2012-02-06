@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require './door.rb'
 
 # A room in the game
 class Room
@@ -15,10 +16,12 @@ class Room
 	# items		-> 	items in the room
 	# mobs		->	mobs in the room
 	# players	->	players in the room
-	attr_accessor :id, :name, :desc, :flags, :items, :mobs, :players
+	# exits		->	A hash of the exits and the connecting rooms
+	# doors		->	A hash of the door types corresponding to the connecting rooms
+	attr_accessor :id, :name, :desc, :flags, :items, :mobs, :players, :exits, :doors
 
 	# Default Constructor 
-	def initialize(id, name, desc, flags, items, mobs, players)
+	def initialize(id, name, desc, flags, items, mobs, players, exits, doors)
 		@id 			= id
 		@name 		= name
 		@desc 		= desc
@@ -26,5 +29,7 @@ class Room
 		@items 		= items
 		@mobs 		= mobs
 		@players	=	players
+		@exits		= exits
+		@doors		= doors
 	end
 end
