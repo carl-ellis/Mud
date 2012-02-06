@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'json'
-require './lib/jserialisable'
+require 'json_serialisable'
 
 # JSON storage functions
 class Mob
