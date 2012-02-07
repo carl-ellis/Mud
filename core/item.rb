@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require './item_template.rb'
+require './core/item_template.rb'
 
 # An instance of  an item in the game
 class Item

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-require './door.rb'
+require './core/door.rb'
+require './core/direction.rb'
 
 # A room in the game
 class Room
@@ -31,5 +32,14 @@ class Room
 		@players	=	players
 		@exits		= exits
 		@doors		= doors
+	end
+
+	# Connects two rooms together
+	def connect(room, direction, door)
+		self.exits[direction] = room
+		self.doors[direction] = door
+
+		room.exits[Direction::opposite(direction)] = self
+		room.doors[Direction::opposite(direction)] = door
 	end
 end
