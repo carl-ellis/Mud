@@ -12,7 +12,7 @@ class Direction
 	SOUTHWEST 	= 6
 	WEST		= 7
 	NORTHWEST	= 8
-	DOWN		=	9
+	DOWN		= 9
 
 	# Method for easily getting the reverse direction
 	def self.opposite(dir)
