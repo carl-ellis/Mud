@@ -40,6 +40,7 @@ class Repository
 		obj = nil
 		@cache.each{ |o| obj = o if o.id == id }
 
+		#TODO Manage last used first position cache here
 		# get from storage if not in the cache
 		obj = get_from_storage(id) if obj.nil?
 

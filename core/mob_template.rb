@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require './core/template.rb'
 
 # A template for a mob in the game
 class MobTemplate < Template

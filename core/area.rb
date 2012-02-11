@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require './core/room.rb'
 
 # An area is a collection of rooms - helpful for admin
 class Area

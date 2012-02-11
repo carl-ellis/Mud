@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require './core/mob_template.rb'
 
 # A mob in the game
 class Mob

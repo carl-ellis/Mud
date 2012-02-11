@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-require './core/door.rb'
-require './core/direction.rb'
 
 # A room in the game
 class Room
