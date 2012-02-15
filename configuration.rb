@@ -1,8 +1,14 @@
 # Handles configuring requirements
 class Configuration
 
+	class << self
+		attr_accessor :opts
+	end
+
   # Handles requirements based on options
 	def self.configure_using_options(options)
+
+		Configuration.opts = options
 
 		require_libs()
 		require_core()
@@ -47,5 +53,7 @@ class Configuration
 		require './storage/json/mob_json.rb'
 		require './storage/json/mob_template_json.rb'
 		require './storage/json/room_json.rb'
+		require './storage/json/repository_json.rb'
+		Repository.data_dir = Configuration.opts.storage_options[:data_dir]
 	end
 end
