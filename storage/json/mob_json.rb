@@ -17,6 +17,15 @@ class Mob
 	end
 
 	def self.json_create(o)
-		new(*o['id'], *o['hp'], *o['template'])
+		new(o['id'], o['hp'], o['template'])
 	end
+
+	# Collect over objects which need to be deserialised
+	# 
+  # Arguments:
+	#  repo: Repository in which to retrieve objects
+	def collect(repo)
+		@template = repo.get(@template)
+	end
+
 end

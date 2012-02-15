@@ -22,11 +22,22 @@ class Repository
 	# Cache
 	@cache_size = 0
 	@cache   = []
+	@cache_ptr = 0
 
 	# Constructor
 	def initialize(cache_size)
-		@cache, @cache_size = [], cache_size
+		@cache, @cache_size, @cache_ptr = [], cache_size, 0
 	end
+
+  # A nice API for getting objects
+	#
+	# Arguments:
+	#   id: Object id
+	def get(id)
+		return get_from_cache(id)
+	end
+
+	private
 
 	# Gets an item from the cache, or if not there, gets via storage method
   # Arguments:
@@ -41,8 +52,15 @@ class Repository
 		@cache.each{ |o| obj = o if o.id == id }
 
 		#TODO Manage last used first position cache here
-		# get from storage if not in the cache
-		obj = get_from_storage(id) if obj.nil?
+		if obj.nil?
+			# get from storage if not in the cache
+			obj = get_from_storage(id)
+			Debug.add("[STORAGE] Got #{id} of type #{obj.class.name}")
+      add_to_cache(obj)
+		else
+			Debug.add("[CACHE] Got #{id} of type #{obj.class.name}")
+			shift_in_cache(obj)
+		end
 
 		return obj
 	end
@@ -56,6 +74,23 @@ class Repository
 	#   obj = Object
 	def get_from_storage(id)
 		raise "[FATAL] Storage model must be used"
+	end
+
+	# Adds an object to the head of the cache
+	def add_to_cache(obj)
+		@cache[@cache_ptr] = obj
+		@cache_ptr += 1
+		@cache_ptr %= @cache_size
+	end
+
+	# Moves an object to the head of the cache
+	def shift_in_cache(obj)
+		ind = @cache.index(obj)
+		if ind < @cache_ptr
+			@cache_ptr -= 1
+			@cache_ptr %= @cache_size
+		end
+		add_to_cache(obj)
 	end
 end
 

@@ -5,7 +5,8 @@ class Options
 	class << self
 		
 		# storage => Storage model used
-		attr_accessor :storage
+		# debug => debug on?
+		attr_accessor :storage, :debug
 
 	end
 

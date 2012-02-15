@@ -23,6 +23,24 @@ class Room
 	end
 
 	def self.json_create(o)
-		new(*o['id'], *o['name'], *o['desc'], *o['flags'], *o['items'], *o['mobs'], *o['players'], *o['exits'], *o['doors'])
+		new(o['id'], o['name'], o['desc'], o['flags'], o['items'], o['mobs'], o['players'], o['exits'], o['doors'])
 	end
+
+	# Collect over objects which need to be deserialised
+	# 
+  # Arguments:
+	#  repo: Repository in which to retrieve objects
+	def collect(repo)
+
+		@items.collect!{ |item| repo.get(item)}
+		@mobs.collect!{ |mob| repo.get(mob)}
+		#TODO when implimented
+    #@players.collect!{ |item| r.get(item)}
+		@exits = Hash[@exits.collect{ |k,v| [k.to_i, v]}]
+		@doors = Hash[@doors.collect{ |k,v| [k.to_i, Door.new(v)]}]
+
+		# Room connections should be handled by the area due to dependencies
+
+	end
+	
 end

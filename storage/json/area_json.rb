@@ -17,6 +17,22 @@ class Area
 	end
 
 	def self.json_create(o)
-		new(*o['id'], *o['name'], *o['rooms'])
+		new(o['id'], o['name'], o['rooms'])
 	end
+
+	# Collect over objects which need to be deserialised
+	# 
+  # Arguments:
+	#  repo: Repository in which to retrieve objects
+	def collect(repo)
+		@rooms.collect!{ |id| repo.get(id) }
+
+		# Connect rooms together
+		rooms.each do |room|
+			room.exits.each do |direction, rid|
+				room.connect(repo.get(rid), direction, room.doors[direction]) if rid.class == Fixnum
+			end
+		end
+	end
+
 end

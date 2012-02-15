@@ -14,10 +14,4 @@ class Template
 		@name = name
 		@desc = desc
 	end
-
-	# String output
-	def to_s
-		return "#{@id}"
-	end
-
 end

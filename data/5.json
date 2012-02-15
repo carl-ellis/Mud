@@ -1,3 +1,1 @@
 {"json_class":"Room","id":5,"name":"West Desk","desc":"It's your desk","flags":0,"items":[2],"mobs":[],"players":[],"exits":{"2":6},"doors":{"2":0}}
-{"json_class":"Room","id":6,"name":"East Desk","desc":"It's not your desk","flags":0,"items":[],"mobs":[4],"players":[],"exits":{"7":5},"doors":{"7":0}}
-{"json_class":"Area","id":7,"name":"Office","rooms":[5,6]}

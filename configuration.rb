@@ -17,6 +17,7 @@ class Configuration
 		  when :json
 				require_json()
 		end
+		require_utils()
 		
 	end
 
@@ -42,6 +43,11 @@ class Configuration
 	# Require default storage classes
 	def self.require_storage
 		require './storage/repository.rb'
+	end
+
+	def self.require_utils
+		require './util/debug.rb'
+		Debug.debug_on = Configuration.opts.debug
 	end
 
 	##OPTIONS
