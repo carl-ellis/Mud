@@ -40,6 +40,11 @@ class Repository
 		return @@repo.get_from_cache(id)
 	end
 
+	def self.repo
+		raise unless !@@repo.nil?
+		@@repo
+	end
+
 
 	# Gets an item from the cache, or if not there, gets via storage method
   # Arguments:
@@ -77,8 +82,6 @@ class Repository
 	def get_from_storage(id)
 		raise "[FATAL] Storage model must be used"
 	end
-
-	private
 
 	# Adds an object to the head of the cache
 	def add_to_cache(obj)

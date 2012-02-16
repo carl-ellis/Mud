@@ -10,6 +10,12 @@ class Mob
 
 	# Default constructor
 	def initialize(id, hp, template)
+
+		# Check types
+		raise unless id.is_a?(Fixnum)
+		raise unless hp.is_a?(Numeric)
+		raise unless template.is_a?(Fixnum)
+
 		@id = id
 		@hp = hp
 		@template = template

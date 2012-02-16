@@ -9,10 +9,5 @@ Configuration.configure_using_options(Options)
 
 Repository.new(10)
 
-begin
-	obj = Repository.get(7)
-	p obj
-rescue Exception => e
-	puts e
-	exit
-end
+obj = Repository.get(7)
+p obj

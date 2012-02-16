@@ -9,6 +9,10 @@ class ItemTemplate < Template
 	# default constructor
 	def initialize(id, name, desc, weight)
 		super(id, name, desc)
+
+		# Type check
+		raise unless weight.is_a?(Numeric)
+
 		@weight = weight
 	end
 end

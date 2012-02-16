@@ -16,6 +16,13 @@ class Direction
 
 	# Method for easily getting the reverse direction
 	def self.opposite(dir)
+
+		# Type check
+		raise unless dir.is_a?(Fixnum)
+		
+		# Bounds check
+		raise unless dir >= 0 && dir <10
+
 		if dir < 5
 			dir + 5
 		else

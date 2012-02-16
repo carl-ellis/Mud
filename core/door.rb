@@ -14,6 +14,13 @@ class Door
 	attr_accessor :state
 	
 	def initialize(state)
+
+		# Check type
+		raise unless state.is_a?(Fixnum)
+
+		# Check bounds
+		raise unless state >= 0
+
 		@state = state
 	end
 

@@ -38,6 +38,7 @@ class Configuration
 	def self.require_libs
 		require 'json'
 		require 'json_serialisable'
+		require 'rake'
 	end
 
 	# Require default storage classes

@@ -9,6 +9,10 @@ class MobTemplate < Template
 	# default constructor
 	def initialize(id, name, desc, max_health)
 		super(id, name, desc)
+
+		# Type Check
+		raise unless max_health.is_a?(Numeric)
+
 		@max_health = max_health
 	end
 end
