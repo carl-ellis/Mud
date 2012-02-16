@@ -27,7 +27,7 @@ class Repository
 		obj = JSON::parse(raw)
 
 		# Grab needed objects, args => self
-		obj.collect(self)
+		obj.cache_collect
 
 		# return
 		return obj

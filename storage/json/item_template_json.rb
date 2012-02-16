@@ -8,10 +8,7 @@ class ItemTemplate
 	# Create the JSON functions
 	attr_serialise :id, :name, :desc, :weight
 
-	# Collect over objects which need to be deserialised
-	# 
-  # Arguments:
-	#  repo: Repository in which to retrieve objects
-	def collect(repo)
+	# Collect other objects which are likely to be used
+	def cache_collect
 	end
 end

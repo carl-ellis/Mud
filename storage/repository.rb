@@ -24,20 +24,22 @@ class Repository
 	@cache   = []
 	@cache_ptr = 0
 
+	@@repo = nil
+
 	# Constructor
 	def initialize(cache_size)
 		@cache, @cache_size, @cache_ptr = [], cache_size, 0
+		@@repo = self
 	end
 
   # A nice API for getting objects
 	#
 	# Arguments:
 	#   id: Object id
-	def get(id)
-		return get_from_cache(id)
+	def self.get(id)
+		return @@repo.get_from_cache(id)
 	end
 
-	private
 
 	# Gets an item from the cache, or if not there, gets via storage method
   # Arguments:
@@ -75,6 +77,8 @@ class Repository
 	def get_from_storage(id)
 		raise "[FATAL] Storage model must be used"
 	end
+
+	private
 
 	# Adds an object to the head of the cache
 	def add_to_cache(obj)

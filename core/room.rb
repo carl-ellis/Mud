@@ -33,11 +33,15 @@ class Room
 	end
 
 	# Connects two rooms together
-	def connect(room, direction, door)
-		self.exits[direction] = room
+	def connect(roomid, direction, door)
+
+		room = Repository.get(roomid)
+		
+		# Check object is a room
+		self.exits[direction] = room.id
 		self.doors[direction] = door
 
-		room.exits[Direction::opposite(direction)] = self
+		room.exits[Direction::opposite(direction)] = self.id
 		room.doors[Direction::opposite(direction)] = door
 	end
 end
