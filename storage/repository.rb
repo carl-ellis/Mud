@@ -19,6 +19,9 @@
 #     * IDs should be unique across everything, so free ids should be tracked
 class Repository
 
+  # Active objects
+  @actives = []
+
 	# Cache
 	@cache_size = 0
 	@cache   = []
@@ -29,17 +32,38 @@ class Repository
 	# Constructor
 	def initialize(cache_size)
 		@cache, @cache_size, @cache_ptr = [], cache_size, 0
+    @actives = []
 		@@repo = self
 	end
+
+  # Accessor
+  def actives
+    @actives
+  end
 
   # A nice API for getting objects
 	#
 	# Arguments:
 	#   id: Object id
 	def self.get(id)
-		return @@repo.get_from_cache(id)
+    obj = @@repo.get_from_cache(id)
+    @@repo.actives << obj
+    Debug.add("[+ACTIVE] #{id} of type #{obj.class.name}")
+    return obj
 	end
 
+  # A nice API for saving objects
+  #
+  # Arguments:
+  #   id: Object id
+  def self.save(id)
+    obj = @@repo.get_active(id)
+    @@repo.save_to_storage(obj)
+    Debug.add("[-ACTIVE] #{id} of type #{obj.class.name}")
+    @@repo.update_cache(id)
+  end
+
+  # Gets the Singleton Repo object
 	def self.repo
 		raise unless !@@repo.nil?
 		@@repo
@@ -58,7 +82,7 @@ class Repository
 		obj = nil
 		@cache.each{ |o| obj = o if o.id == id }
 
-		#TODO Manage last used first position cache here
+		# Manage last used first position cache here
 		if obj.nil?
 			# get from storage if not in the cache
 			obj = get_from_storage(id)
@@ -83,6 +107,20 @@ class Repository
 		raise "[FATAL] Storage model must be used"
 	end
 
+	# Virtual method - Should be overridden my storage class
+	# Saves an object to storage
+  # Arguments:
+	#   obj = Object
+	def save_to_storage(obj)
+		raise "[FATAL] Storage model must be used"
+	end
+
+  # Gets an object from the active list
+  def get_active(id)
+    obj = @actives.find { |o| o.id == id}
+    obj
+  end
+
 	# Adds an object to the head of the cache
 	def add_to_cache(obj)
 		@cache[@cache_ptr] = obj
@@ -99,5 +137,23 @@ class Repository
 		end
 		add_to_cache(obj)
 	end
+
+  # Updates cache from the active list and removes from the active list
+  def update_cache(id)
+    
+    # Delete from the active queue
+    obj = @actives.find { |i| i.id == id}
+    @actives.delete(obj)
+
+    # Update in the cach and place in front
+    @cache.collect do |o|
+      if o.id == id
+        obj
+      else
+        o
+      end
+    end
+    shift_in_cache(obj)
+  end
 end
 

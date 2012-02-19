@@ -11,3 +11,4 @@ Repository.new(10)
 
 obj = Repository.get(7)
 p obj
+Repository.save(7)

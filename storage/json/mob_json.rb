@@ -5,16 +5,7 @@ require 'json_serialisable'
 # JSON storage functions
 class Mob
 
-	# Create the JSON functions
-	# Can't use the automatic ones here due for flexibility needed
-	def to_json(*a)
-		{
-			'json_class' 		=>	self.class.name,
-			'id'						=>	@id,
-			'hp'						=> 	@hp,
-			'template'			=>	@template.id
-		}.to_json(*a)
-	end
+  attr_serialise :id, :hp, :template
 
 	def self.json_create(o)
 		new(o['id'], o['hp'], o['template'])
@@ -22,7 +13,7 @@ class Mob
 
 	# Collect other objects which are likely to be used
 	def cache_collect
-		Repository.get(@template)
+		Repository.repo.get_from_cache(@template)
 	end
 
 end

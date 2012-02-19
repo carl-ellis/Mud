@@ -14,9 +14,9 @@ class Room
 			'name'					=> 	@name,
 			'desc'					=> 	@desc,
 			'flags'					=> 	@flags,
-			'items'					=>	@items.collect { |i| i.id },
-			'mobs'					=>	@mobs.collect { |m| m.id },
-			'players'				=>	@players.collect { |p| p.id },
+			'items'					=>	@items,
+			'mobs'					=>	@mobs,
+			'players'				=>	@players,
 			'exits' 				=>	Hash[@exits.collect { |k,v| [k, v.id]}],
 			'doors' 				=>	Hash[@doors.collect { |k,v| [k, v.state]}]
 		}.to_json(*a)
@@ -29,8 +29,8 @@ class Room
 	# Collect other objects which are likely to be used
 	def cache_collect
 
-		@items.each { |i|	Repository.get(i) }
-		@mobs.each { |m|	Repository.get(m) }
+		@items.each { |i|	Repository.repo.get_from_cache(i) }
+		@mobs.each { |m|	Repository.repo.get_from_cache(m) }
 		@exits = Hash[@exits.collect{ |k,v| [k.to_i, v]}]
 		@doors = Hash[@doors.collect{ |k,v| [k.to_i, Door.new(v)]}]
 

@@ -33,7 +33,32 @@ class Repository
 		return obj
 	end
 
+	# Overloaded method from repository
+	# Saves an object to storage
+	# Arguments:
+	#   id = Object id
+	def save_to_storage(obj)
+		raise "[FATAL] Storage directory not set" if Repository.data_dir.nil?
+
+		write_raw(obj)
+	end
+
+
 private
+
+  # Given an object, write out the json file
+  def write_raw(obj)
+
+    # To write
+    raw_data = obj.to_json
+
+    # File name
+    file_name = "#{Repository.data_dir}#{obj.id}.json"
+
+    File.open(file_name, 'w') do |f|
+      f.puts(raw_data)
+    end
+  end
 
 	# Given that data files are stored {datadir}/{id}.json, retrieve that file or fail
 	def aquire_raw(id)
