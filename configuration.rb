@@ -44,6 +44,7 @@ class Configuration
 	# Require default storage classes
 	def self.require_storage
 		require './storage/repository.rb'
+		require './storage/freeid.rb'
 	end
 
 	def self.require_utils
