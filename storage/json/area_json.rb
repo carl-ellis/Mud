@@ -8,10 +8,6 @@ class Area
 
   attr_serialise :id, :name, :rooms
 
-	def self.json_create(o)
-		new(o['id'], o['name'], o['rooms'])
-	end
-
 	# Collect other objects which are likely to be used
 	def cache_collect
 		@rooms.each{ |rid| Repository.repo.get_from_cache(rid) }
