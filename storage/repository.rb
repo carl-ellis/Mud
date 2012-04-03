@@ -67,6 +67,32 @@ class Repository
     @@repo.update_cache(id)
   end
 
+  # A nice API for creating hard objects
+  # Assigns the obj and ID and saves to the repository
+  #
+  # Arguments:
+  #   obj: Object
+  #
+  # Returns
+  #  Object id
+  def self.create(obj)
+    
+    # Check that the obj has an id method
+    raise unless obj.class.public_method_defined?("id")
+
+    # Assign ID
+    id = @@repo.next_id
+    obj.id = id
+              
+    # Save and cache
+    @@repo.save_to_storage(obj)
+    Debug.add("[CREATE] #{id} of type #{obj.class.name}")
+    self.get(id)
+
+    # Return ID
+    return id
+  end
+
   # Gets the Singleton Repo object
 	def self.repo
 		raise unless !@@repo.nil?
@@ -177,6 +203,12 @@ class Repository
     # Set a destructor to make sure freeid is saved
     ObjectSpace.define_finalizer(self, proc { Repository.save(id) })
 
+  end
+
+  # Returns a freeid
+  def next_id()
+		raise "[FATAL] Id tracking must be used" unless !@freeid.nil?
+    return @freeid.next
   end
 
 end
