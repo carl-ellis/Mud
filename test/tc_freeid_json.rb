@@ -8,6 +8,7 @@ class FreeIdJsonTest < Test::Unit::TestCase
 	def setup()
 		Options.storage = :json
 		Configuration.configure_using_options(Options)
+    Repository.new(10)
 	end
 
 	# Checks that arguments are rejected if they're wrong
@@ -23,5 +24,9 @@ class FreeIdJsonTest < Test::Unit::TestCase
 		assert_equal(8, freeid.next, "Last not working")
 		assert_equal(9, freeid.next, "Last not incrementing")
 	end
+
+  def test_repoattach
+    assert_raise( RuntimeError){ Repository.repo.freeid(1) }
+  end
 
 end

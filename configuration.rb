@@ -32,6 +32,7 @@ class Configuration
 		require './core/mob.rb'
 		require './core/room.rb'
 		require './core/area.rb'
+		require './core/player.rb'
 	end
 
 	# Requires libraries
@@ -39,6 +40,7 @@ class Configuration
 		require 'json'
 		require 'json_serialisable'
 		require 'rake'
+		require 'digest/sha2'
 	end
 
 	# Require default storage classes
@@ -50,6 +52,7 @@ class Configuration
 	def self.require_utils
 		require './util/debug.rb'
 		Debug.debug_on = Configuration.opts.debug
+		require './util/password.rb'
 	end
 
 	##OPTIONS

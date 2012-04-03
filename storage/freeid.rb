@@ -43,5 +43,10 @@ class FreeId
 		@extras << id
 	end
 
+  # Accessor method
+  def id
+    @id
+  end
+
 end
 

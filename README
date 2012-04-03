@@ -5,7 +5,7 @@ Another attempt at writing a mud.
 TODO:
 
 * A gamestate object
-  + This would hold things like the freeids, the player name list, and all the preamble such as titlescreen and motd
+  + This would hold things like the --freeids--, the player name list, and all the preamble such as titlescreen and motd
 	+ By that I mean ids of storage objects which hold them
 * Player support
 * Networking

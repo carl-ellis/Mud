@@ -29,11 +29,15 @@ class Repository
 
 	@@repo = nil
 
+  # FreeId tracker object
+  @freeid
+
 	# Constructor
 	def initialize(cache_size)
 		@cache, @cache_size, @cache_ptr = [], cache_size, 0
     @actives = []
 		@@repo = self
+    @freeid = nil
 	end
 
   # Accessor
@@ -155,5 +159,25 @@ class Repository
     end
     shift_in_cache(obj)
   end
+
+  # Sets the Freeid object
+  # Arguments:
+  #   id      Id of freeid tracer object
+  def freeid(id)
+
+    # Get object
+    obj = Repository.get(id)
+
+    # Check if the correct type
+    raise unless obj.is_a?(FreeId)
+
+    # Set object
+    @freeid = obj
+
+    # Set a destructor to make sure freeid is saved
+    ObjectSpace.define_finalizer(self, proc { Repository.save(id) })
+
+  end
+
 end
 

@@ -21,5 +21,4 @@ class RepositoryTest < Test::Unit::TestCase
 		assert_raise(RuntimeError) { Repository.get(1) }
 	end
 
-
 end

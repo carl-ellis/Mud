@@ -27,6 +27,9 @@ attr_serialise :id, :extras, :last
 
 	end
 
+  def cache_collect
+  end
+
 
 private
 
