@@ -86,11 +86,33 @@ class Repository
               
     # Save and cache
     @@repo.save_to_storage(obj)
-    Debug.add("[CREATE] #{id} of type #{obj.class.name}")
+    Debug.add("[++CREATE] #{id} of type #{obj.class.name}")
     self.get(id)
 
     # Return ID
     return id
+  end
+
+  # A nice API for removing hard objects
+  # Gets the id and checks that nothing reference it. then deletes the datafile
+  #
+  # Arguments:
+  #   id: Object id
+  #
+  # Returns
+  #   If deleted or not
+  def self.delete(id)
+    
+    # Check to see if it is garbagable
+		return false if @@repo.garbage_check(id)
+
+    # Save and cache
+    @@repo.remove_from_storage(id)
+    @@repo.remove_from_cache(id)
+    Debug.add("[--DELETE] #{id}")
+
+    # Return ID
+    return true
   end
 
   # Gets the Singleton Repo object
@@ -110,7 +132,7 @@ class Repository
 		
 		# Check cache
 		obj = nil
-		@cache.each{ |o| obj = o if o.id == id }
+		@cache.each{ |o| obj = o if !o.nil? && o.id == id }
 
 		# Manage last used first position cache here
 		if obj.nil?
@@ -142,6 +164,14 @@ class Repository
   # Arguments:
 	#   obj = Object
 	def save_to_storage(obj)
+		raise "[FATAL] Storage model must be used"
+	end
+
+	# Virtual method - Should be overridden my storage class
+	# Removes an object to storage
+  # Arguments:
+	#   id = Object id
+	def remove_to_storage(id)
 		raise "[FATAL] Storage model must be used"
 	end
 
@@ -186,6 +216,15 @@ class Repository
     shift_in_cache(obj)
   end
 
+	# Remove an object from the cache
+	# Arguments:
+	#		id: 	id to remove
+	def remove_from_cache(id)
+		ind = -1
+		(0...@cache.length). each{ |i| ind = i if @cache[i].id == id }
+		@cache[ind] = nil
+	end
+
   # Sets the Freeid object
   # Arguments:
   #   id      Id of freeid tracer object
@@ -215,8 +254,6 @@ class Repository
 	# Prerequisite to deletion
 	# Arguments:
 	#		id			Id of object to check for
-	# Returns:
-	#				True if the item IS connected to something, else false
 	def garbage_check(id)
 		found = false
 		get_all_ids.each { |i| found = true if Repository.get(i).garbage_check(id) }

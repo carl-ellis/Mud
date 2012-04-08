@@ -34,7 +34,7 @@ attr_serialise :id, :extras, :last
 	# Arguments:
 	#		id		Id of object to check for
 	def garbage_check(id)
-	 return false
+	 return id == @id
 	end
 
 private

@@ -23,6 +23,9 @@ class Repository
 		# Aquire raw JSON
 		raw = aquire_raw(id)
 
+		# Escape if object not found
+		return nil if raw.nil?
+
 		# Create object
 		obj = JSON::parse(raw)
 
@@ -36,11 +39,21 @@ class Repository
 	# Overloaded method from repository
 	# Saves an object to storage
 	# Arguments:
-	#   id = Object id
+	#   obj = Object
 	def save_to_storage(obj)
 		raise "[FATAL] Storage directory not set" if Repository.data_dir.nil?
 
 		write_raw(obj)
+	end
+
+	# Overloaded method from repository
+	# Removes an object to storage
+	# Arguments:
+	#   id = Object id
+	def remove_from_storage(id)
+		raise "[FATAL] Storage directory not set" if Repository.data_dir.nil?
+
+		remove_file(id)
 	end
 
 
@@ -58,6 +71,23 @@ private
     File.open(file_name, 'w') do |f|
       f.puts(raw_data)
     end
+  end
+
+  # Given an id, remove the json file
+  def remove_file(id)
+
+    # Get file name
+    file_name = "#{Repository.data_dir}#{id}.json"
+
+		# Check if file exists
+		if File.exists?(file_name)
+			# if so delete
+			File.delete(file_name)
+		else
+			Debug.add("[WARNING] #{id}.json not found")
+		end
+
+		@freeid.extras << id
   end
 
 	# Given that data files are stored {datadir}/{id}.json, retrieve that file or fail
