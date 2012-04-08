@@ -21,8 +21,10 @@ class RepositoryTest < Test::Unit::TestCase
 		assert_raise(RuntimeError) { Repository.get(1) }
 	end
 
+	# Tests exceptions when no freetracking added
   def test_nofreetracking
 		assert_raise(RuntimeError) { Repository.repo.next_id }
+		assert_raise(RuntimeError) { Repository.repo.get_all_ids}
   end
 
 end

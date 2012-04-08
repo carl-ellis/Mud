@@ -211,5 +211,31 @@ class Repository
     return @freeid.next
   end
 
+	# Checks every object to see if it references an ID
+	# Prerequisite to deletion
+	# Arguments:
+	#		id			Id of object to check for
+	# Returns:
+	#				True if the item IS connected to something, else false
+	def garbage_check(id)
+		found = false
+		get_all_ids.each { |i| found = true if Repository.get(i).garbage_check(id) }
+		return found
+	end
+
+	# Gets the id of every object in the repo
+	def get_all_ids
+		raise "[FATAL] Id tracking must be used" unless !@freeid.nil?
+
+		# Create a list of all possible ids
+		raw = []
+		0.upto(@freeid.last-1).each { |i| raw << i}
+
+		# Remove the gaps
+		ids = raw - @freeid.extras
+
+		return ids
+	end
+
 end
 

@@ -19,4 +19,12 @@ class Player
     Repository.repo.get_from_cache(@room)
   end
 
+	# Return true if the id is in use by this object
+	# Arguments:
+	#		id		Id of object to check for
+	def garbage_check(id)
+	 return room == id || inv.include?(id)
+	end
+
+
 end

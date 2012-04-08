@@ -48,5 +48,15 @@ class FreeId
     @id
   end
 
+  # Accessor method
+  def last
+    @last
+  end
+
+	def extras
+		@extras
+	end
+
+
 end
 

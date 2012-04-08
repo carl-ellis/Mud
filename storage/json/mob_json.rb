@@ -16,4 +16,11 @@ class Mob
 		Repository.repo.get_from_cache(@template)
 	end
 
+	# Return true if the id is in use by this object
+	# Arguments:
+	#		id		Id of object to check for
+	def garbage_check(id)
+	 return @template == id
+	end
+
 end

@@ -30,6 +30,12 @@ attr_serialise :id, :extras, :last
   def cache_collect
   end
 
+	# Return true if the id is in use by this object
+	# Arguments:
+	#		id		Id of object to check for
+	def garbage_check(id)
+	 return false
+	end
 
 private
 

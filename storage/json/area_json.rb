@@ -13,4 +13,11 @@ class Area
 		@rooms.each{ |rid| Repository.repo.get_from_cache(rid) }
 	end
 
+	# Return true if the id is in use by this object
+	# Arguments:
+	#		id		Id of object to check for
+	def garbage_check(id)
+	 return @rooms.include?(id)
+	end
+
 end

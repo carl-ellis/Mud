@@ -11,4 +11,11 @@ class ItemTemplate
 	# Collect other objects which are likely to be used
 	def cache_collect
 	end
+
+	# Return true if the id is in use by this object
+	# Arguments:
+	#		id		Id of object to check for
+	def garbage_check(id)
+	 return false
+	end
 end

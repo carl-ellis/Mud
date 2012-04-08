@@ -35,5 +35,13 @@ class Room
 		@doors = Hash[@doors.collect{ |k,v| [k.to_i, Door.new(v)]}]
 
 	end
+
+	# Return true if the id is in use by this object
+	# Arguments:
+	#		id		Id of object to check for
+	def garbage_check(id)
+	 return @items.include?(id) || @mobs.include?(id) || @exits.values.include?(id)
+	end
+
 	
 end

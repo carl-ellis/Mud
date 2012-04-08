@@ -40,7 +40,7 @@ class Configuration
 		require 'json'
 		require 'json_serialisable'
 		require 'rake'
-		require 'digest/sha2'
+		require 'bcrypt'
 	end
 
 	# Require default storage classes
