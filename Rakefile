@@ -17,6 +17,7 @@ Rake::TestTask.new("test_units_core") do |t|
 										"./test/tc_door.rb",
 										"./test/tc_room.rb",
 										"./test/tc_player.rb",
+										"./test/tc_player_manager.rb",
 										"./test/tc_password.rb",
 										"./test/tc_repository.rb",
 										"./test/tc_freeid.rb",

@@ -33,6 +33,7 @@ class Configuration
 		require './core/room.rb'
 		require './core/area.rb'
 		require './core/player.rb'
+		require './core/player_manager.rb'
 	end
 
 	# Requires libraries
