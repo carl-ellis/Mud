@@ -17,7 +17,7 @@ class Room
 			'items'					=>	@items,
 			'mobs'					=>	@mobs,
 			'players'				=>	@players,
-			'exits' 				=>	Hash[@exits.collect { |k,v| [k, v.id]}],
+			'exits' 				=>	Hash[@exits.collect { |k,v| [k, v]}],
 			'doors' 				=>	Hash[@doors.collect { |k,v| [k, v.state]}]
 		}.to_json(*a)
 	end

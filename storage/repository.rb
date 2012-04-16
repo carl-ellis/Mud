@@ -109,6 +109,8 @@ class Repository
     # Save and cache
     @@repo.remove_from_storage(id)
     @@repo.remove_from_cache(id)
+
+		# Recycle id
     Debug.add("[--DELETE] #{id}")
 
     # Return ID
@@ -177,7 +179,7 @@ class Repository
 
   # Gets an object from the active list
   def get_active(id)
-    obj = @actives.find { |o| o.id == id}
+    obj = @actives.find { |o| !o.nil? && o.id == id}
     obj
   end
 
@@ -191,7 +193,7 @@ class Repository
 	# Moves an object to the head of the cache
 	def shift_in_cache(obj)
 		ind = @cache.index(obj)
-		if ind < @cache_ptr
+		if !ind.nil? && ind < @cache_ptr 
 			@cache_ptr -= 1
 			@cache_ptr %= @cache_size
 		end
@@ -256,7 +258,19 @@ class Repository
 	#		id			Id of object to check for
 	def garbage_check(id)
 		found = false
-		get_all_ids.each { |i| found = true if Repository.get(i).garbage_check(id) }
+		get_all_ids.each do |i| 
+
+			# Get obj
+			obj = Repository.repo.get_from_cache(i)
+
+			# Check for links
+			if obj.garbage_check(id) 
+				found = true
+			end
+		end
+
+		# Ensure current obj is still in the cache
+		Repository.get(id)
 		return found
 	end
 
