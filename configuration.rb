@@ -34,6 +34,7 @@ class Configuration
 		require './core/area.rb'
 		require './core/player.rb'
 		require './core/player_manager.rb'
+		require './core/skillset.rb'
 	end
 
 	# Requires libraries
