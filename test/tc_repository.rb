@@ -27,4 +27,12 @@ class RepositoryTest < Test::Unit::TestCase
 		assert_raise(RuntimeError) { Repository.repo.get_all_ids}
   end
 
+	def test_cachepositive
+		assert_raise(RuntimeError) { Repository.new(-1) }
+	end
+
+	def test_cachenooptions
+		assert_raise(RuntimeError) { Repository.new() }
+	end
+
 end

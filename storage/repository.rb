@@ -33,11 +33,27 @@ class Repository
   @freeid
 
 	# Constructor
-	def initialize(cache_size)
+	def initialize(cache_size = nil)
+
+		# size not given, check and use options
+		if cache_size.nil?
+			raise unless !Options.storage_options[:cache_size].nil? 
+			cache_size = Options.storage_options[:cache_size] 
+		end
+
+		# Check cache size is positive
+		raise unless cache_size > 0
+
 		@cache, @cache_size, @cache_ptr = [], cache_size, 0
     @actives = []
 		@@repo = self
-    @freeid = nil
+
+		# If defined in options, set the freeid tracker here
+		if !Options.storage_options[:freeid_id].nil? 
+			self.freeid(Options.storage_options[:freeid_id])
+		else
+			@freeid = nil
+		end
 	end
 
   # Accessor

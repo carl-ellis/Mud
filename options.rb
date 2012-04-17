@@ -11,6 +11,9 @@ class Options
 	end
 
 	# storage_options => options for storage model (needs fancier inits
+	# data_dir
+	# cache_size
+	# freeid_id
 	@@storage_options = {}
 
 	# Accessor
