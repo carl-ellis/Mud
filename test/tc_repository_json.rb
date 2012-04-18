@@ -5,6 +5,14 @@ require 'test/unit'
 # Tests for Area
 class RepositoryJsonTest < Test::Unit::TestCase
 
+	class Testclass
+		attr_accessor :id, :name
+
+		def initialize(id, name)
+			@id, @name = id, name
+		end
+	end
+
 	CACHE_SIZE = 10
 
 	def setup()
@@ -42,6 +50,11 @@ class RepositoryJsonTest < Test::Unit::TestCase
 		# Check object has gone
 		assert_equal(nil, Repository.get(id), "Object isn't deleted")
 
+	end
+
+	def test_nojson
+		a = Testclass.new(1, "i")
+		assert_raise(RuntimeError){Repository.create(a)}
 	end
 
 

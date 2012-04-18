@@ -6,6 +6,8 @@
 #    - Some objects may require their dependencies deserialised too
 class Repository
 
+	@checked_classes
+
 	# Static methods needed i.e. storage dir
 	class << self
 		attr_accessor :data_dir
@@ -42,6 +44,20 @@ class Repository
 	#   obj = Object
 	def save_to_storage(obj)
 		raise "[FATAL] Storage directory not set" if Repository.data_dir.nil?
+
+		# Build a white list for classes if doesn't exist
+		@checked_classes = [] if @checked_classes.nil?
+
+		# Check the object has a sane to_json defined
+		if !@checked_classes.include?(obj.class.name)
+			begin
+				JSON::parse(obj.to_json)
+				@checked_classes << obj.class.name
+			rescue
+				raise "[FATAL] Object cannot be stored, to_json method not defined"
+			end
+		end
+			
 
 		write_raw(obj)
 	end
