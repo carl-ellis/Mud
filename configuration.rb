@@ -70,5 +70,6 @@ class Configuration
 		Repository.data_dir = Configuration.opts.storage_options[:data_dir]
 		require './storage/json/freeid_json.rb'
 		require './storage/json/player_manager_json.rb'
+		require './storage/json/statset_json.rb'
 	end
 end

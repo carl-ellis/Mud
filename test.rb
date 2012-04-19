@@ -12,16 +12,16 @@ Configuration.configure_using_options(Options)
 Repository.new()
 #Repository.repo.freeid(0)
 
-#a = Area.new(1,"Lancashire",[])
 #p a
 begin
 
-statset = Statset.new(1, [:str, :int, :dex, :con, :cha, :luc])
+a = Area.new(1,"Lancashire",[])
+#statset = Statset.new(1, [:str, :int, :dex, :con, :cha, :luc])
 #p statset
-id =  Repository.create(statset)
-#a = nil
+id =  Repository.create(a)
+a = nil
 
-#Repository.delete(8)
+Repository.delete(id)
 
 #obj = Repository.get(7)
 #p obj

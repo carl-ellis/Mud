@@ -103,7 +103,7 @@ class Repository
     # Save and cache
     @@repo.save_to_storage(obj)
     Debug.add("[++CREATE] #{id} of type #{obj.class.name}")
-    self.get(id)
+    @@repo.get_from_cache(id)
 
     # Return ID
     return id
