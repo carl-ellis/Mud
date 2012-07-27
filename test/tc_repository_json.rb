@@ -49,7 +49,6 @@ class RepositoryJsonTest < Test::Unit::TestCase
 
 		# Check object has gone
 		assert_equal(nil, Repository.get(id), "Object isn't deleted")
-
 	end
 
 	def test_nojson

@@ -101,9 +101,16 @@ class Repository
     obj.id = id
               
     # Save and cache
-    @@repo.save_to_storage(obj)
-    Debug.add("[++CREATE] #{id} of type #{obj.class.name}")
-    @@repo.get_from_cache(id)
+		# If the object is not a valid object, make sure to save the id
+		begin
+			@@repo.save_to_storage(obj)
+			Debug.add("[++CREATE] #{id} of type #{obj.class.name}")
+			@@repo.get_from_cache(id)
+		rescue
+    	@@repo.delete_id(id)
+			# Remember to escalate the raise
+			raise "[FATAL] Object cannot be stored, serialisable method not defined"
+		end
 
     # Return ID
     return id
@@ -128,6 +135,7 @@ class Repository
 
 		# Recycle id
     Debug.add("[--DELETE] #{id}")
+		@@repo.delete_id(id)
 
     # Return ID
     return true
@@ -258,7 +266,7 @@ class Repository
     @freeid = obj
 
     # Set a destructor to make sure freeid is saved
-    ObjectSpace.define_finalizer(self, proc { Repository.save(id) })
+    ObjectSpace.define_finalizer(self, proc {Repository.save(id) })
 
   end
 
@@ -303,6 +311,13 @@ class Repository
 
 		return ids
 	end
+
+	# Recycle an ID into the free id tracker
+	def delete_id(id)
+		raise "[FATAL] Id tracking must be used" unless !@freeid.nil?
+		@freeid.extras << id
+	end
+		
 
 end
 

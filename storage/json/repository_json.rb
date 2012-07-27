@@ -102,8 +102,6 @@ private
 		else
 			Debug.add("[WARNING] #{id}.json not found")
 		end
-
-		@freeid.extras << id
   end
 
 	# Given that data files are stored {datadir}/{id}.json, retrieve that file or fail
